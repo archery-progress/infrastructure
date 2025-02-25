@@ -1,5 +1,5 @@
 postgres:
-  host: postgres
-  user: postgres
-  password: password
+  host: qovery.env.DB_URL
+  user: qovery.env.DB_USERNAME
+  password: qovery.env.DB_CREDS
   database: api
