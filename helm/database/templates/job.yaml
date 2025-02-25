@@ -11,9 +11,20 @@ spec:
           env:
             - name: PGPASSWORD
               value: "{{ .Values.postgres.password }}"
+            - name: PGHOST
+              value: "{{ .Values.postgres.host }}"
+            - name: DATABASE_NAME
+              value: "{{ .Values.postgres.database }}"
           command: 
             - sh
             - -c
-            - psql -h {{ .Values.postgres.host }} -U {{ .Values.postgres.user }} -c "CREATE DATABASE IF NOT EXISTS {{ .Values.postgres.database }};"
-        restartPolicy: Never
-    backoffLimit: 4
+            - |
+              echo "Attempting to create database..."
+              if psql -U postgres -tc "SELECT 1 FROM pg_database WHERE datname = '$DATABASE_NAME'" | grep -q 1; then
+                echo "Database already exists"
+              else
+                psql -U postgres -c "CREATE DATABASE $DATABASE_NAME;"
+              fi
+
+      restartPolicy: Never
+  backoffLimit: 4
