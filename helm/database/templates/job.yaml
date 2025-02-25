@@ -11,6 +11,9 @@ spec:
           env:
             - name: PGPASSWORD
               value: "{{ .Values.postgres.password }}"
-          command: ["sh", "-c", "psql -h {{ .Values.postgres.host }} -U {{ .Values.postgres.user }} -c \"CREATE DATABASE IF NOT EXISTS {{ .Values.postgres.database }};\""]
+          command: 
+            - sh
+            - -c
+            - psql -h {{ .Values.postgres.host }} -U {{ .Values.postgres.user }} -c "CREATE DATABASE IF NOT EXISTS {{ .Values.postgres.database }};"
         restartPolicy: Never
     backoffLimit: 4
