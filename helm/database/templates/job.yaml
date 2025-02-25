@@ -20,6 +20,9 @@ spec:
             - -c
             - |
               echo "Attempting to create database..."
+              echo "Host: $PGHOST"
+              echo "Database: $DATABASE_NAME"
+              echo "Password: $PGPASSWORD"
               if psql -U postgres -tc "SELECT 1 FROM pg_database WHERE datname = '$DATABASE_NAME'" | grep -q 1; then
                 echo "Database already exists"
               else
