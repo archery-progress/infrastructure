@@ -25,6 +25,8 @@ spec:
               value: "production"
             - name: MONITORING_KEY
               value: "monitoring-key"
+            - name: AUTH_COOKIE
+              value: "auth-cookie"
             - name: DB_HOST
               value: "{{ .Values.postgres.host }}"
             - name: DB_PORT
