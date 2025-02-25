@@ -1,5 +1,6 @@
 postgres:
-  host: qovery.env.DB_URL
-  user: qovery.env.DB_USERNAME
-  password: qovery.env.DB_CREDS
+  host: host
+  user: user
+  password: password
   database: api
+  port: 5432

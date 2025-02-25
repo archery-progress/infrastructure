@@ -1,0 +1,67 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: run-migrations
+spec:
+  template:
+    spec:
+      containers:
+        - name: run-migrations
+          image: "{{ .Values.migrations.image }}"
+          env:
+            - name: PORT
+              value: "3333"
+            - name: HOST
+              value: "0.0.0.0"
+            - name: LOG_LEVEL
+              value: "info"
+            - name: APP_KEY
+              value: "app-key"
+            - name: NODE_ENV
+              value: "production"
+            - name: MONITORING_KEY
+              value: "monitoring-key"
+            - name: DB_HOST
+              value: "{{ .Values.postgres.host }}"
+            - name: DB_PORT
+              value: "{{ .Values.postgres.port }}"
+            - name: DB_USER
+              value: "{{ .Values.postgres.user }}"
+            - name: DB_PASSWORD
+              value: "{{ .Values.postgres.password }}"
+            - name: DB_DATABASE
+              value: "{{ .Values.postgres.database }}"
+            - name: FRONTEND_URL
+              value: "frontend-url"
+            - name: APP_BASE_URL
+              value: "app-base-url"
+            - name: SMTP_HOST
+              value: "smtp-host"
+            - name: SMTP_PORT
+              value: "465"
+            - name: SMTP_USERNAME
+              value: "resend"
+            - name: SMTP_PASSWORD
+              value: "re_ixtvbAC5_1bPYDQYFwpX5ur49vdpcM312"
+            - name: SMTP_EMAIL
+              value: "adonis.te"
+            - name: DRIVE_DISK
+              value: "gcp"
+            - name: GCP_CLIENT_EMAIL
+              value: "gcp-client-email"
+            - name: GCP_PRIVATE_KEY
+              value: "gcp-private-key"
+            - name: GCP_BUCKET
+              value: "my-archery-progress"
+            - name: GOOGLE_CLIENT_ID
+              value: "google-client-id"
+            - name: GOOGLE_CLIENT_SECRET
+              value: "google-client-secret"
+          command:
+            - sh
+            - -c
+            - |
+              echo "Running migrations..."
+              node ace migration:run -f
+      restartPolicy: Never
+  backoffLimit: 2
