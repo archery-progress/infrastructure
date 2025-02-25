@@ -68,6 +68,6 @@ spec:
             - -c
             - |
               echo "Running migrations..."
-              node ace migration:run -f
+              node ace migration:run --force
       restartPolicy: Never
   backoffLimit: 2
