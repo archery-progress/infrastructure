@@ -4,3 +4,5 @@ postgres:
   password: password
   database: api
   port: 5432
+migrations:
+  image: "ghcr.io/archery-progress/backend"

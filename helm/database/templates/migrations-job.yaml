@@ -2,12 +2,16 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: run-migrations
+  annotations:
+    "helm.sh/hook": "post-install,post-upgrade"
+    "helm.sh/hook-weight": "1"
+    "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded"
 spec:
   template:
     spec:
       containers:
         - name: run-migrations
-          image: "{{ .Values.migrations.image }}"
+          image: "{{ .Values.migrations.image }}:latest"
           env:
             - name: PORT
               value: "3333"
